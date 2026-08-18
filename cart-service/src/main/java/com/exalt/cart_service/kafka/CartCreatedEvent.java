@@ -27,9 +27,28 @@ public class CartCreatedEvent {
     }
 
 //    ==== GETTERS ====
+    /**
+     * a method for getting the cart ID
+     * @return
+     */
     public UUID getCartId() { return cartId; }
+
+    /**
+     * a method for getting the product ID
+     * @return
+     */
     public int getProductId() { return productId; }
+
+    /**
+     * a method for getting the quantity
+     * @return
+     */
     public int getQuantity() { return quantity; }
+
+    /**
+     * a method for getting the time stamp
+     * @return
+     */
     public Instant getTimestamp() { return timestamp; }
 //    ==== GETTERS ====
 }
