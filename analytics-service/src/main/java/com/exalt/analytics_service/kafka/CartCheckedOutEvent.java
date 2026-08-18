@@ -3,6 +3,14 @@ package com.exalt.analytics_service.kafka;
 import java.time.Instant;
 import java.util.UUID;
 
+/**
+ * Mirrors cart-service's CartCheckedOutEvent. This is a deliberately
+ * separate copy -- analytics-service does not share Java classes with
+ * cart-service across the process boundary. It only needs to agree on
+ * the JSON shape published to the "cart-checked-out" topic.
+ *
+ * @author Mohammad Rimawi
+ */
 public class CartCheckedOutEvent {
     private UUID cartId;
     private int totalItems;

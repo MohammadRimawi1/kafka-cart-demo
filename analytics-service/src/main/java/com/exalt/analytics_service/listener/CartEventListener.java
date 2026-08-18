@@ -32,6 +32,15 @@ public class CartEventListener {
         this.analyticsService = analyticsService;
     }
 
+    /**
+     * Triggered for every message on cart-created. Deserialization uses
+     * cartCreatedListenerFactory (see KafkaConsumerConfig), which fixes
+     * the payload type to CartCreatedEvent.
+     *
+     * @param event the deserialized cart-created payload
+     * @param ack   manual ack handle; calling acknowledge() commits this
+     *              message's offset so it won't be redelivered on restart
+     */
     @KafkaListener(
             topics = "cart-created",
             groupId = "analytics-service-group",
@@ -43,6 +52,13 @@ public class CartEventListener {
         ack.acknowledge();
     }
 
+    /**
+     * Triggered for every message on cart-checked-out. Deserialization
+     * uses cartCheckedOutListenerFactory, fixed to CartCheckedOutEvent.
+     *
+     * @param event the deserialized cart-checked-out payload
+     * @param ack   manual ack handle, see handleCartCreated for details
+     */
     @KafkaListener(
             topics = "cart-checked-out",
             groupId = "analytics-service-group",
@@ -54,6 +70,18 @@ public class CartEventListener {
         ack.acknowledge();
     }
 
+    /**
+     * Triggered for every message on cart-abandoned. Deserialization
+     * uses cartAbandonedListenerFactory, fixed to CartAbandonedEvent.
+     *
+     * Note this is a separate subscription from notification-service's
+     * listener on the same topic -- different groupId means Kafka tracks
+     * this service's read position independently, so both consumers see
+     * every abandoned-cart event at their own pace.
+     *
+     * @param event the deserialized cart-abandoned payload
+     * @param ack   manual ack handle, see handleCartCreated for details
+     */
     @KafkaListener(
             topics = "cart-abandoned",
             groupId = "analytics-service-group",

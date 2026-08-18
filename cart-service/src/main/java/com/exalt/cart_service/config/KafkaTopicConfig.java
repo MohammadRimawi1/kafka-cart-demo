@@ -14,16 +14,30 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class KafkaTopicConfig {
 
+    /**
+     * Declares the "cart-created" topic with 1 partition and a
+     * replication factor of 1 -- fine for a single-broker local demo,
+     * would need to be higher in a real multi-broker deployment for
+     * fault tolerance.
+     */
     @Bean
     public NewTopic cartCreatedTopic() {
         return new NewTopic(KafkaTopics.CART_CREATED, 1, (short) 1);
     }
 
+    /**
+     * Declares the "cart-checked-out" topic, same partition/replication
+     * settings as above.
+     */
     @Bean
     public NewTopic cartCheckedOutTopic() {
         return new NewTopic(KafkaTopics.CART_CHECKED_OUT, 1, (short) 1);
     }
 
+    /**
+     * Declares the "cart-abandoned" topic, same partition/replication
+     * settings as above.
+     */
     @Bean
     public NewTopic cartAbandonedTopic() {
         return new NewTopic(KafkaTopics.CART_ABANDONED, 1, (short) 1);

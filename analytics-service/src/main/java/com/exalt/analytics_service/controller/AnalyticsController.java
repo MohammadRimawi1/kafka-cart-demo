@@ -24,6 +24,16 @@ public class AnalyticsController {
         this.analyticsService = analyticsService;
     }
 
+    /**
+     * Returns the current running totals for all three event types.
+     * LinkedHashMap is used instead of a plain HashMap so the JSON
+     * response keeps a consistent, predictable key order
+     * (cartCreated, cartCheckedOut, cartAbandoned) rather than
+     * whatever order a HashMap happens to iterate in.
+     *
+     * @return a map of event type name to count, e.g.
+     *         { "cartCreated": 5, "cartCheckedOut": 2, "cartAbandoned": 1 }
+     */
     @GetMapping("/api/analytics/totals")
     public Map<String, Long> getTotals() {
         Map<String, Long> totals = new LinkedHashMap<>();
